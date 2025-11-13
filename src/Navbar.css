@@ -12,14 +12,18 @@
 }
 
 .logo{
-    height: 24px;
-    width: 24px;
+    height: 36px;
+    width: 36px;
     border-radius: 50%;
 }
 
 a {
     display: flex;
     align-items: center;
+}
+
+.vbar{
+    color: black;
 }
 
 .nav-logo {
