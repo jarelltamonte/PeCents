@@ -1,6 +1,6 @@
 .savingsPage {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: #FEEEDB;
   padding: 40px 20px;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .header {
-  background: white;
+  background: #f6e2ca;
   border-radius: 8px;
   padding: 30px;
   margin-bottom: 30px;
@@ -33,7 +33,7 @@
 }
 
 .totalSavings {
-  background: #4a5568;
+  background: #9EBF27;
   padding: 20px 30px;
   border-radius: 8px;
   color: white;
@@ -58,7 +58,7 @@
 }
 
 .goalCard {
-  background: white;
+  background: #f6e2ca;
   padding: 25px;
   border-radius: 8px;
   position: relative;
@@ -165,27 +165,27 @@
 }
 
 .addGoalCard {
-  border: 2px dashed #cbd5e0;
+  border: 2px dashed #9EBF27;
   border-radius: 8px;
   padding: 25px;
   text-align: center;
   cursor: pointer;
-  background: white;
+  background: #f6e2ca;
   transition: 0.2s;
   min-height: 200px;
 }
 
 .addGoalCard:hover {
-  background: #f7fafc;
+  background: #FEEEDB;
 }
 
 .plusIcon {
   font-size: 48px;
-  color: #4a5568;
+  color: #9EBF27;
 }
 
 .stats {
-  background: white;
+  background: #f6e2ca;
   border-radius: 8px;
   padding: 30px;
   display: grid;
@@ -266,7 +266,7 @@
 
 
 .generalSection {
-  background: white;
+  background: #9EBF27;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
