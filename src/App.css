@@ -3,7 +3,7 @@ h1 {
 }
 
 body {
-  background-color: #9EBF27;
+  background-color: #9ebf27;
   justify-content: center;
   align-items: center;
 }
@@ -26,7 +26,7 @@ body {
 }
 
 .App-header {
-  background-color: #9EBF27;
+  background-color: #9ebf27;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,8 +35,18 @@ body {
   color: white;
 }
 
+.C2-Description {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.C2-Description h4 {
+  margin: 0px;
+}
+
 .Dashboard {
-  background-color: #FEEEDB;
+  background-color: #feeedb;
   width: 80vw;
   margin: 0 auto;
   padding: 20px 40px;
@@ -59,6 +69,36 @@ body {
   padding-bottom: 40px;
 }
 
+.Dashbuttons {
+  display: flex;          
+  gap: 10px;              
+  width: 100%;  
+  justify-content: center;
+  margin: 20px 0px;          
+}
+
+.Dashbuttons button {
+  width: 50%;    
+  flex: 4;             
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.Funds {
+  border-radius: 10px;
+  background-color: #9ebf27;
+  padding: 10px 50px;
+} 
+
+.Funds-name {
+  text-align: left;
+  font-size: 30px;
+}
+.Funds-value {
+  text-align: right;
+  font-size: 50px;
+}
+
 @media (max-width: 768px) {
   .Dashboard-container {
     flex-direction: column;
@@ -70,11 +110,12 @@ body {
     width: 100%;
     margin-bottom: 10px;
   }
-}
-
-.Funds {
-  border-radius: 10px;
-  background-color: #9EBF27;
-  padding: 10px;
-
+  .Funds-name {
+    text-align: center;
+    font-size: 24px;
+  }
+  .Funds-value {
+    text-align: center;
+    font-size: 24px;
+  }
 }
