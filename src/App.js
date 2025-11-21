@@ -16,8 +16,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
         </Routes>
       </Router>
-      
-    </div> /* APP DIV FINISH */
+
+    </div>
   );
 }
 

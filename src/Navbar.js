@@ -10,7 +10,7 @@ function Navbar() {
         <li><Link to="/savings">Savings</Link></li>
         <p className="vbar">|</p>
 
-        <li><Link to="/"><img src={logo} alt='logo' className='logo'/></Link></li>
+        <li><Link to="/"><img src={logo} alt='logo' className='logo' /></Link></li>
         <p className="vbar">|</p>
 
         <li><Link to="/profile">Profile</Link></li>
