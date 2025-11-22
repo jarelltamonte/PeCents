@@ -30,18 +30,17 @@ export default function SavingsPage() {
     localStorage.setItem("funds", funds);
   }, [funds]);
 
-  /* -------------------- GENERAL SAVINGS -------------------- */
+  /* -------------------------------------------------- 
+     GENERAL SAVINGS FUNCTIONS
+  ----------------------------------------------------- */
   const handleGeneralAdd = () => {
     const amount = Number(generalAmount);
     if (!amount || amount <= 0) return;
     if (amount > funds) { alert("Not enough funds in HomePage!"); return; }
 
-
     setTotalSavings(prev => prev + amount);
     setFunds(prev => prev - amount);
     setGeneralAmount("");
-
-
   };
 
   const handleGeneralWithdraw = () => {
@@ -49,15 +48,14 @@ export default function SavingsPage() {
     if (!amount || amount <= 0) return;
     if (amount > totalSavings) { alert("Not enough savings to withdraw!"); return; }
 
-
     setTotalSavings(prev => prev - amount);
     setFunds(prev => prev + amount);
     setGeneralAmount("");
-
-
   };
 
-  /* -------------------- GOAL FUNCTIONS -------------------- */
+  /* --------------------------------------------------- 
+      GOAL FUNCTIONS
+   ----------------------------------------------------- */
   const handleAddMoney = (goalId) => {
     const amount = Number(customAmounts[goalId]);
     if (!amount || amount <= 0) return;
@@ -129,11 +127,13 @@ export default function SavingsPage() {
 
   const getProgressPercentage = (current, target) => Math.min((current / target) * 100, 100);
 
-  /* -------------------- RENDER -------------------- */
+  /* --------------------------------------------------- 
+      RENDER
+   ----------------------------------------------------- */
   return (<div className="savingsPage"> <div className="container">
 
     ```
-    {/* GENERAL SAVINGS */}
+    {/* --------------------------- GENERAL SAVINGS --------------------------- */}
     <div className="header">
       <div className="generalSection">
         <h2>General Savings</h2>
@@ -161,7 +161,7 @@ export default function SavingsPage() {
       </div>
     </div>
 
-    {/* GOALS GRID */}
+    {/* --------------------------- GOALS GRID --------------------------- */}
     <div className="goalsGrid">
       {goals.map(goal => {
         const progress = getProgressPercentage(goal.current, goal.target);
@@ -185,6 +185,7 @@ export default function SavingsPage() {
         );
       })}
 
+      {/* --------------------------- ADD GOAL CARD --------------------------- */}
       {!showAddGoal ? (
         <div className="addGoalCard" onClick={() => setShowAddGoal(true)}>
           <span className="plusIcon">+</span>
@@ -203,7 +204,7 @@ export default function SavingsPage() {
       )}
     </div>
 
-    {/* STATS */}
+    {/* --------------------------- STATS --------------------------- */}
     <div className="stats">
       <div className="statItem"><h2 className="statNumber">{goals.length}</h2><p className="statLabel">Active Goals</p></div>
       <div className="statItem"><h2 className="statNumber">₱{goals.reduce((sum, goal) => sum + goal.current, 0).toLocaleString("en-PH", { minimumFractionDigits: 2 })}</h2><p className="statLabel">Total Saved</p></div>
