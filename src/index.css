@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Ginger";
+  src: url("./assets/fonts/GingerBrand.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Garota";
+  src: url("./assets/fonts/GarotaSans-Regular-FFP.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Champagne";
+  src: url("./assets/fonts/Champagne\ &\ Limousines.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "Champagne", sans-serif;
+}
+
+h1 {
+  font-weight: normal;
+  font-family: C;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+}
