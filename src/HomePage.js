@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import Navbar from "./Navbar";
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+
 
 function HomePage() {
 
@@ -26,7 +28,13 @@ function HomePage() {
         return saved ? Number(saved) : 0;
     });
 
-    // Save to localStorage
+    // ---- FUNDS HISTORY ----
+    const [history, setHistory] = useState(() => {
+        const saved = localStorage.getItem("history");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    // Save to all these Data <3 localStorage
     useEffect(() => {
         localStorage.setItem('funds', funds);
     }, [funds]);
@@ -39,6 +47,60 @@ function HomePage() {
         localStorage.setItem("totalWithdrawn", totalWithdrawn);
     }, [totalWithdrawn]);
 
+    // For the Graph
+    const [viewType, setViewType] = useState("deposit");  // deposit | withdraw
+    const [viewRange, setViewRange] = useState("daily");  // daily | monthly
+
+    const getAllDaysOfMonth = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth(); // 0-indexed
+
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const labels = [];
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const date = new Date(year, month, d);
+            labels.push(date.toLocaleDateString("en-US", { month: "short", day: "numeric" })); // e.g., "Nov 01"
+        }
+
+        return labels;
+    };
+
+    const xAxisLabels = getAllDaysOfMonth();
+
+    // GRAPH HELPER FUNCTION FOR CATEGORIZATION
+    const graphData = (() => {
+
+        const filtered = history.filter(h => h.type === viewType); // Filter by deposit or withdraw
+        const grouped = {}; // Group by date or month
+
+        filtered.forEach(entry => {
+            const date = new Date(entry.date);
+
+            // Format key for grouping
+            let key;
+            if (viewRange === "daily") {
+                // Format as "Nov 21"
+                key = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            } else {
+                // Format as "Nov 2025"
+                key = date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+            }
+
+            grouped[key] = (grouped[key] || 0) + entry.amount;
+        });
+
+
+
+        // Convert to array for Recharts
+        return Object.keys(grouped).map(key => ({
+            date: key,
+            amount: grouped[key]
+        }));
+    })();
+
+
 
     /*=========================================
       BUTTON FUNCTIONS
@@ -50,6 +112,16 @@ function HomePage() {
 
             setFunds(prev => prev + amount);
             setTotalDeposited(prev => prev + amount);
+
+            setHistory(prev => {
+                const updated = [...prev, {
+                    type: "deposit",
+                    amount,
+                    date: new Date().toISOString()
+                }];
+                localStorage.setItem("history", JSON.stringify(updated));
+                return updated;
+            });
 
         } else {
             alert("Enter a valid number");
@@ -65,6 +137,16 @@ function HomePage() {
 
                 setFunds(prev => prev - amount);
                 setTotalWithdrawn(prev => prev + amount);
+
+                setHistory(prev => {
+                    const updated = [...prev, {
+                        type: "withdraw",
+                        amount,
+                        date: new Date().toISOString()
+                    }];
+                    localStorage.setItem("history", JSON.stringify(updated));
+                    return updated;
+                });
 
             } else {
                 alert("Insufficient funds");
@@ -115,7 +197,7 @@ function HomePage() {
 
     // ---- DISPLAY FUNDS ----
     const formattedFunds =
-        `₱${funds.toLocaleString("en-PH", {
+        `Php ${funds.toLocaleString("en-PH", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         })}`;
@@ -151,7 +233,45 @@ function HomePage() {
 
                         {/* COLUMN 2 */}
                         <div className="Dashboard-column">
+                            <div style={{ display: "flex", gap: "10px" }}>
+                                <button onClick={() => setViewType("deposit")}>Deposits</button>
+                                <button onClick={() => setViewType("withdraw")}>Withdrawals</button>
+
+                                <button onClick={() => setViewRange("daily")}>Daily</button>
+                                <button onClick={() => setViewRange("monthly")}>Monthly</button>
+                            </div>
+
+
                             <h1>GRAPH</h1>
+                            <div style={{ width: "100%", height: 300 }}>
+                                <LineChart data={graphData} width={500} height={300} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+
+                                    {/* X-Axis with readable dates */}
+                                    <XAxis
+                                        dataKey="date"
+                                        angle={-45}       // rotate long labels
+                                        textAnchor="end"  // align text
+                                        interval={0}      // show every label
+                                    />
+
+                                    {/* Y-Axis */}
+                                    <YAxis
+                                        label={{ value: "₱ Amount", angle: -90, position: "insideLeft", offset: 10 }}
+                                    />
+
+                                    <Tooltip />
+
+                                    <Line
+                                        type="monotone"
+                                        dataKey="amount"
+                                        stroke="#8884d8"
+                                        strokeWidth={3}
+                                        dot={{ r: 4 }}
+                                    />
+                                </LineChart>
+                            </div>
+
                             <div className="C2-Description">
                                 <h3>Total Funds Deposited: {"Php "}
                                     {totalDeposited.toLocaleString("en-PH", {
