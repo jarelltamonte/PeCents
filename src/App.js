@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./Navbar";
 import SavingsPage from "./SavingsPage";
 import HomePage from "./HomePage";
+import ProfilePage from "./ProfilePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/savings" element={<SavingsPage />} />
           <Route path="/dashboard" element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Router>
 
