@@ -34,6 +34,13 @@ function HomePage() {
         return saved ? JSON.parse(saved) : [];
     });
 
+    // ---- SAVINGS GOALS ----
+    const [goals, setGoals] = useState(() => {
+        const saved = localStorage.getItem("goals");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+
     // Save to all these Data <3 localStorage
     useEffect(() => {
         localStorage.setItem('funds', funds);
@@ -66,6 +73,18 @@ function HomePage() {
 
         return labels;
     };
+
+    // For savings display
+    useEffect(() => {
+        const handleStorage = () => {
+            const saved = localStorage.getItem("goals");
+            setGoals(saved ? JSON.parse(saved) : []);
+        };
+
+        window.addEventListener("storage", handleStorage);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, []);
+
 
     const xAxisLabels = getAllDaysOfMonth();
 
@@ -246,9 +265,52 @@ function HomePage() {
                                 <button onClick={handleWithdraw}>WITHDRAW</button>
                             </div>
 
-                            <div>
-                                <h1>Savings Plans Display</h1>
+                            <div className="accordionContainer">
+                                <h1>Savings Goals</h1><br></br>
+
+                                <div className='gscrollbar'>
+                                    <div className="accordionList">
+                                        {goals.length === 0 ? (
+                                            <p className="noGoals">No goals yet.</p>
+                                        ) : (
+                                            goals.map(goal => (
+                                                <details key={goal.id} className="accordionItem">
+                                                    <summary className="accordionHeader">
+                                                        <span>{goal.name} <span style={{ color: "#1a1a1a9a", fontSize: "14px" }}>Click to Expand</span></span>
+                                                        <span>
+                                                            {(
+                                                                (goal.current / goal.target) * 100
+                                                            ).toFixed(1)}
+                                                            %
+                                                        </span>
+                                                    </summary>
+
+                                                    <div className="accordionContent">
+                                                        <p>
+                                                            ₱{goal.current.toLocaleString("en-PH")} /
+                                                            ₱{goal.target.toLocaleString("en-PH")}
+                                                        </p>
+
+                                                        <div className="accordionProgressBar">
+                                                            <div
+                                                                className="accordionProgressFill"
+                                                                style={{
+                                                                    width: `${(goal.current / goal.target) * 100}%`
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        <p className="accordionRemaining">
+                                                            ₱{(goal.target - goal.current).toLocaleString("en-PH")} remaining
+                                                        </p>
+                                                    </div>
+                                                </details>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
 
 
@@ -321,8 +383,8 @@ function HomePage() {
 
                     </div>
                 </div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }
 
