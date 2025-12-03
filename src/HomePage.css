@@ -179,6 +179,12 @@ button {
     height: 240px;
     overflow-y: auto;
     scrollbar-width: thin;
+
+    /* Hide scrollbar in all modern browsers */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
 }
 
 .accordionTitle {
@@ -251,7 +257,6 @@ button {
     padding-right: 10px;
     box-sizing: border-box;
 }
-
 
 .accordionList::-webkit-scrollbar {
     width: 8px;
